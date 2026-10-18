@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#101018">
+<title>TIK TOK YM</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101018;color:white;font-family:Arial,sans-serif}
+.app{height:100dvh;display:flex;flex-direction:column;max-width:520px;margin:auto;background:#15151d}
+header{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:#15151d}
+.logo{font-size:22px;font-weight:900;letter-spacing:1px}
+.logo span{color:#28e0ce}
+.top{display:flex;gap:18px;font-size:14px;color:#aaa}
+.top b{color:white;border-bottom:2px solid #28e0ce;padding-bottom:7px}
+.feed{flex:1;min-height:0;position:relative;overflow:hidden;background:linear-gradient(155deg,#24354b,#6d3d70 48%,#e58c75)}
+.scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.scene:before{content:"";position:absolute;width:230px;height:230px;border-radius:50%;background:#f4b36a;top:12%;right:-55px;filter:blur(1px)}
+.scene:after{content:"";position:absolute;width:150%;height:55%;bottom:-12%;left:-20%;background:linear-gradient(135deg,#162f35,#274a45,#111d2a);border-radius:50% 50% 0 0;transform:rotate(-8deg)}
+.art{position:absolute;z-index:1;font-size:100px;top:31%;left:50%;transform:translateX(-50%);filter:drop-shadow(0 10px 15px #1118)}
+.caption{position:absolute;z-index:3;bottom:22px;right:15px;left:78px;text-shadow:0 2px 8px #0009}
+.user{font-weight:bold;font-size:16px;margin-bottom:10px}
+.caption p{font-size:14px;line-height:1.6;margin:0}
+.tags{color:#bffcf4;margin-top:8px;font-size:13px}
+.actions{position:absolute;z-index:4;bottom:105px;left:13px;display:flex;flex-direction:column;gap:22px;align-items:center}
+.action{border:0;background:transparent;color:white;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;cursor:pointer;text-shadow:0 1px 5px #000}
+.action .ico{font-size:29px}
+.action.liked{color:#ff5d87}
+.avatar{width:43px;height:43px;border:2px solid white;border-radius:50%;display:grid;place-items:center;background:#28a99f;font-size:22px}
+.sound{position:absolute;z-index:4;bottom:20px;left:15px;font-size:12px;background:#0004;padding:8px 10px;border-radius:20px}
+nav{height:61px;background:#15151d;display:flex;align-items:center;justify-content:space-around;border-top:1px solid #ffffff14}
+nav button{color:#aaa;background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px}
+nav button span{font-size:22px}
+nav button.active{color:#28e0ce}
+#comments{position:absolute;z-index:8;inset:0;background:#0008;display:none;align-items:flex-end}
+.sheet{background:#fff;color:#171720;border-radius:20px 20px 0 0;width:100%;padding:18px;max-height:70%;overflow:auto}
+.sheet-head{display:flex;justify-content:space-between;font-weight:bold;margin-bottom:15px}
+.comment{padding:10px 0;border-bottom:1px solid #eee;font-size:14px}
+.comment-form{display:flex;gap:8px;margin-top:12px}
+.comment-form input{min-width:0;flex:1;border:1px solid #ddd;border-radius:20px;padding:12px}
+.comment-form button{border:0;background:#18bdb0;color:#111;border-radius:20px;padding:0 15px}
+@media(min-width:521px){.app{border-left:1px solid #333;border-right:1px solid #333}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<div class="logo">TIK TOK <span>YM</span></div>
+<div class="top"><b>لك</b><span>المتابَعون</span></div>
+<div>⌕</div>
+</header>
+<main class="feed">
+<div class="scene"><div class="art">🏔️</div></div>
+<div class="caption">
+<div class="user">@TIKTOK_YM ✨</div>
+<p>مرحباً بكم في عالم TIK TOK YM 💚<br>شارك لحظاتك وكن جزءاً من مجتمعنا الجديد!</p>
+<div class="tags">#TIKTOK_YM #اليمن</div>
+</div>
+<div class="actions">
+<button class="action"><div class="avatar">YM</div><span>متابعة</span></button>
+<button class="action" id="like"><span class="ico">♡</span><span id="likes">0</span></button>
+<button class="action" id="openComments"><span class="ico">▢</span><span id="commentCount">0</span></button>
+<button class="action" id="share"><span class="ico">↗</span><span>مشاركة</span></button>
+</div>
+<div class="sound">♫ الصوت الأصلي · TIK TOK YM</div>
+<div id="comments">
+<div class="sheet">
+<div class="sheet-head"><span>التعليقات</span><button id="closeComments">إغلاق ✕</button></div>
+<div id="commentList"><div class="comment">أهلاً بكم في TIK TOK YM 👋</div></div>
+<form class="comment-form" id="commentForm">
+<input id="commentInput" placeholder="اكتب تعليقاً..." maxlength="250" required>
+<button type="submit">إرسال</button>
+</form>
+</div>
+</div>
+</main>
+<nav>
+<button class="active"><span>⌂</span>الرئيسية</button>
+<button id="discover"><span>⌕</span>اكتشف</button>
+<button id="create"><span>⊕</span>إنشاء</button>
+<button id="inbox"><span>♧</span>الرسائل</button>
+<button id="profile"><span>♙</span>حسابي</button>
+</nav>
+</div>
+<script>
+let liked=false,likes=0,comments=0;
+const like=document.getElementById('like');
+like.addEventListener('click',()=>{
+liked=!liked;
+likes=Math.max(0,likes+(liked?1:-1));
+like.classList.toggle('liked',liked);
+like.querySelector('.ico').textContent=liked?'♥':'♡';
+document.getElementById('likes').textContent=likes;
+});
+const panel=document.getElementById('comments');
+document.getElementById('openComments').onclick=()=>panel.style.display='flex';
+document.getElementById('closeComments').onclick=()=>panel.style.display='none';
+document.getElementById('commentForm').addEventListener('submit',e=>{
+e.preventDefault();
+const input=document.getElementById('commentInput');
+const text=input.value.trim();
+if(!text)return;
+const item=document.createElement('div');
+item.className='comment';
+item.textContent=text;
+document.getElementById('commentList').appendChild(item);
+comments++;
+document.getElementById('commentCount').textContent=comments;
+input.value='';
+});
+document.getElementById('share').onclick=async()=>{
+try{
+if(navigator.share)await navigator.share({title:'TIK TOK YM',text:'جرّب واجهة TIK TOK YM'});
+else alert('يمكنك مشاركة رابط الموقع من المتصفح.');
+}catch(e){}
+};
+document.getElementById('create').onclick=()=>alert('سنضيف رفع الفيديوهات بعد تجهيز الخادم.');
+document.getElementById('profile').onclick=()=>alert('سنضيف إنشاء الحساب وتسجيل الدخول في المرحلة التالية.');
+document.getElementById('discover').onclick=()=>alert('سيتم تجهيز صفحة اكتشاف الفيديوهات لاحقاً.');
+document.getElementById('inbox').onclick=()=>alert('ستُضاف الرسائل بعد تجهيز الحسابات والخادم.');
+</script>
+</body>
+</html>
